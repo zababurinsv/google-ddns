@@ -6,37 +6,36 @@
 // import httpProxy from 'http-proxy'
 // import whitelist from './whitelist/whitelist.mjs'
 // import express from "express";
-// import Btc from './btc.api.openbazaar.mjs'
-// import Ltc from './ltc.api.openbazaar.mjs'
-// import Zec from './zec.api.openbazaar.mjs'
-// import Bch from './bch.api.openbazaar.mjs'
+
 // import stdrpc from "stdrpc"
 // import dotenv from 'dotenv'
 // dotenv.config()
 import wifi from "node-wifi";
 import {networkInterfaces} from "os";
 const nets = networkInterfaces();
-const results = Object.create(null);
-for (const name of Object.keys(nets)) {
-    for (const net of nets[name]) {
-        if (net.family === 'IPv4' && !net.internal) {
-            if (!results[name]) {
-                results[name] = [];
-            }
-            console.log('net.address', net.address)
-            results[name].push(net.address);
-        }
-    }
-}
 
-// wifi.init({
-//     iface: null // network interface, choose a random wifi interface if set to null
-// });
-// wifi.scan((error, networks) => {
-//     if (error) {
-//         console.log(error);
-//     } else {
-        // console.log(networks);
+
+wifi.init({
+    iface: null // network interface, choose a random wifi interface if set to null
+});
+wifi.scan((error, networks) => {
+    if (error) {
+        console.log(error);
+    } else {
+        console.log('1 --- scan --- 1',networks);
+
+        const results = Object.create(null);
+        for (const name of Object.keys(nets)) {
+            for (const net of nets[name]) {
+                if (net.family === 'IPv4' && !net.internal) {
+                    if (!results[name]) {
+                        results[name] = [];
+                    }
+                    console.log('net.address', net.address)
+                    results[name].push(net.address);
+                }
+            }
+        }
         /*
             networks = [
                 {
@@ -54,46 +53,59 @@ for (const name of Object.keys(nets)) {
                 ...
             ];
             */
-    // }
-// });
-//
-// let connect = wifi.connect({ ssid: 'Sergey.Zb', password: 'gcxf567gD$6' }, error => {
-//     if (error) {
-//         console.log(error);
-//     }
-//     console.log('Connected');
-//
-//
-//     wifi.getCurrentConnections((error, currentConnections) => {
-//         if (error) {
-//             console.log(error);
-//         } else {
-//             console.log(currentConnections);
-//             /*
-//             you may have several connections
-            // [
-            //     {
-            //         iface: '...', // network interface used for the connection, not available on macOS
-            //         ssid: '...',
-            //         bssid: '...',
-            //         mac: '...', // equals to bssid (for retrocompatibility)
-            //         channel: <number>,
-            //         frequency: <number>, // in MHz
-            //         signal_level: <number>, // in dB
-            //         quality: <number>, // same as signal level but in %
-            //         security: '...' //
-            //         security_flags: '...' // encryption protocols (format currently depending of the OS)
-            //         mode: '...' // network mode like Infra (format currently depending of the OS)
-            //     }
-            // ]
-            // */
-        // }
-    // });
-// });
-//
-//
-//
-//
+    }
+});
+
+wifi.connect({ ssid: 'Sergey.Zb', password: 'gcxf567gD$6' }, error => {
+    if (error) {
+        console.log(error);
+    }
+    console.log('Connected');
+
+
+    const results = Object.create(null);
+    for (const name of Object.keys(nets)) {
+        for (const net of nets[name]) {
+            if (net.family === 'IPv4' && !net.internal) {
+                if (!results[name]) {
+                    results[name] = [];
+                }
+                console.log('net.address', net.address)
+                results[name].push(net.address);
+            }
+        }
+    }
+
+    wifi.getCurrentConnections((error, currentConnections) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log(currentConnections);
+            /*
+            you may have several connections
+            [
+                {
+                    iface: '...', // network interface used for the connection, not available on macOS
+                    ssid: '...',
+                    bssid: '...',
+                    mac: '...', // equals to bssid (for retrocompatibility)
+                    channel: <number>,
+                    frequency: <number>, // in MHz
+                    signal_level: <number>, // in dB
+                    quality: <number>, // same as signal level but in %
+                    security: '...' //
+                    security_flags: '...' // encryption protocols (format currently depending of the OS)
+                    mode: '...' // network mode like Infra (format currently depending of the OS)
+                }
+            ]
+            */
+        }
+    });
+});
+
+
+
+
 // console.log('--- connect ---', connect)
 // var app = express();
 //

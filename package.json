@@ -3,9 +3,11 @@
   "version": "1.1.1",
   "description": "Google Dynamic DNS client update tool. Updates the DNS IP address to the current public IP.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node main.js",
+    "wifi": "node index.js",
     "logs": "tail -f ./logs.log"
   },
   "bin": "./main.js",
@@ -33,5 +35,8 @@
   "bugs": {
     "url": "https://github.com/DEDAjs/google-ddns/issues"
   },
-  "homepage": "https://github.com/DEDAjs/google-ddns#readme"
+  "homepage": "https://github.com/DEDAjs/google-ddns#readme",
+  "dependencies": {
+    "node-wifi": "^2.0.14"
+  }
 }
